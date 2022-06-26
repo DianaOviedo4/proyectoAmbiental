@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--Estilos Css-->
+  <link rel="stylesheet" type="text/css" href="/static/contacto.css">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div id="contact-form">
+    <div>
+      <h1>¡Contactate con Nosotros!</h1>
+      <h4>Si necesitas informacion especifica de nuestros servicios, deja tus datos.</h4>
+    </div>
+    <p id="failure">Oopsie...message not sent.</p>
+    <p id="success">Your message was sent successfully. Thank you!</p>
+
+    <form method="POST" action="" id="form_contact">
+      {% csrf_token %}
+      <div>
+        <label for="name">
+          <span class="required">Nombres: *</span>
+          <input type="text" id="name" name="nombres" value="" placeholder="Ingresa tu nombre" required="required"
+            tabindex="1" autofocus="autofocus" />
+        </label>
+      </div>
+      <div>
+        <label for="name">
+          <span class="required">Apellidos: *</span>
+          <input type="text" id="name" name="apellidos" value="" placeholder="Ingresa tu apellido" required="required"
+            tabindex="1" autofocus="autofocus" />
+        </label>
+      </div>
+
+      <div>
+        <label for="email">
+          <span class="required">Correo Electronico: *</span>
+          <input type="email" id="email" name="correoElectronico" value="" placeholder="correo@gmail.com" tabindex="2"
+            required="required" />
+        </label>
+      </div>
+      <div>
+        <label for="tel">
+          <span class="required">Telefono: *</span>
+          <input type="" id="telefono" name="telefono" value="" placeholder="ej: 3216548899" tabindex="2"
+            required="required" />
+        </label>
+      </div>
+      <div>
+        <label for="message">
+          <span class="required">Comentario: *</span>
+          <textarea id="message" name="message" placeholder="Por favor, escribe tus comentarios" tabindex="5"
+            required="required"></textarea>
+        </label>
+      </div>
+      <div>
+        <button name="submit" type="submit" id="submit">ENVIAR</button>
+      </div>
+    </form>
+
+  </div>
+
+
+</body>
+
+</html>
+
+<script>
+
+  $.ajax({
+    url: '/crearContacto/',
+    method: 'POST',
+    data: {}, /*Aqui va la info que se le envia al servidor*/
+    dataType: 'json',
+
+
+    success: function (data_view) {
+      alert('AJAX call was successful!');
+      alert('Data from the server' + data_view);
+    },
+    error: function () {
+      alert('There was some error performing the AJAX call!');
+    }
+  }
+  );
+</script>
