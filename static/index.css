@@ -13,7 +13,6 @@ body {
 
 .container {
     background-color: rgba(209, 216, 213, 0.533);
-
     width: 100%;
     color: white;
     max-width: 100% !important;
@@ -27,12 +26,13 @@ body {
     /*margin: auto;*/
 }
 
+
 .card {
     border-radius: 0;
     height: 350px;
     background-image: url(/static/zyro-image.png);
     background-position: inherit;
-    background-size: contain;
+    background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
     padding-top: 50px;
@@ -49,13 +49,6 @@ body {
     position: revert;
 }
 
-/*
-.cuerpo{
-    width: 100%;
-    height: 2000px;
-}
-*/
-
 .col p {
     color: rgba(0, 0, 0, 0.693);
 
@@ -67,7 +60,6 @@ body {
 
 .fila1 {
     padding: 25px;
-    height: 100%;
 }
 
 .list-group {
@@ -168,7 +160,7 @@ input{
 }
 
 .copyright {
-    background-color: rgba(162, 196, 188, 0.734);
+    background-color: rgba(162, 196, 188, 0.577);
     text-align: center;
     padding-top: 10px;
     margin-top: 80px;

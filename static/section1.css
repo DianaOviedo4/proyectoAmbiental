@@ -23,7 +23,7 @@
 }
 
 .active-tab{
-    color: white;
+    color: black !important;
     background-color: #c5d8ff;
 }
 

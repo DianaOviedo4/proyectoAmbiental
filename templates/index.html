@@ -20,8 +20,8 @@
   <!--CDN JQuery-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
 </head>
 
 <body>
@@ -36,25 +36,25 @@
       <div class="options col">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="/contacto/">Contactanos</a>
+            <a class="nav-link" href="/contacto/">Contáctanos</a>
           </li>
         </ul>
       </div>
 
     </div>
   </nav>
+  
   <!--Cabecera-->
   <div class="card">
     <div class="card-img-overlay">
-      <h1 class="title">Mundo cruel</h1>
     </div>
   </div>
 
 
   <!-- SECTION 1 -->
-  <h1 style="text-align:center;">Índice de calidad del agua</h1>
+  <h1 style="text-align:center;">Índice de Calidad del Agua</h1>
   {% include "section2.html" %}
- 
+
 
   <!-- SECTION 2 -->
   {% include "section1.html" %}
@@ -93,7 +93,7 @@
   function valida_icosus() {
     // Campos de texto Icomo
     if ($("#solid_total").val() == "") {
-      alert("El campo delsolid_totaldisuelto no puede estar vacío.");
+      alert("Debes ingresar los sólidos totales.");
       $("#solid_total").focus();
       return false;
     }
@@ -101,20 +101,20 @@
     return true; // Si todo está correcto
   }
 
-  function verificarClasificacion(valor){
-      if(valor > 0 && valor < 0.2){
-        return {"color" : "azul" , "clasificacion" : "Ninguno" , "rango" : "0 - 0.2"}
-      }else if(valor >= 0.2 && valor < 0.4){
-        return {"color" : "verde" , "clasificacion" : "Bajo" , "rango" : "0.2 - 0.4"}
-      }else if(valor >= 0.4 && valor < 0.6){
-        return {"color" : "amarillo" , "clasificacion" : "Medio" , "rango" : "0.4 - 0.6"}
-      }else if(valor >= 0.6 && valor < 0.8){
-        return {"color" : "naranja" , "clasificacion" : "Alto" , "rango" : "0.6 - 0.8"}
-      }else if(valor >= 0.8 && valor < 1 ){
-        return {"color" : "rojo" , "clasificacion" : "Muy alto" , "rango" : "0.8 - 1"}
-      }else{
-        return {"color" : "No definido" , "clasificacion" : "No definido" , "rango" : "No definido"}
-      }
+  function verificarClasificacion(valor) {
+    if (valor > 0 && valor < 0.2) {
+      return { "color": "azul", "clasificacion": "Ninguno", "rango": "0 - 0.2" }
+    } else if (valor >= 0.2 && valor < 0.4) {
+      return { "color": "verde", "clasificacion": "Bajo", "rango": "0.2 - 0.4" }
+    } else if (valor >= 0.4 && valor < 0.6) {
+      return { "color": "amarillo", "clasificacion": "Medio", "rango": "0.4 - 0.6" }
+    } else if (valor >= 0.6 && valor < 0.8) {
+      return { "color": "naranja", "clasificacion": "Alto", "rango": "0.6 - 0.8" }
+    } else if (valor >= 0.8 && valor < 1) {
+      return { "color": "rojo", "clasificacion": "Muy alto", "rango": "0.8 - 1" }
+    } else {
+      return { "color": "No definido", "clasificacion": "No definido", "rango": "No definido" }
+    }
   }
 
   $('#enviar_form_ICOSUS').click(function (e) {
@@ -131,8 +131,6 @@
       dataType: 'json',
 
       success: function (data_view) {
-        //alert('AJAX call was successful!');
-        //alert('Data from the server' + data_view);
         console.log(data_view);
         let valor = data_view.result;
         $('#valor-indice-ICOMI').html(valor.toFixed(3));
@@ -144,7 +142,7 @@
       },
 
       error: function () {
-        alert('There was some error performing the AJAX call!');
+        alert('HA OCURRIDO UN ERROR, INTENTALO DE NUEVO.');
       }
     }
     );
@@ -159,13 +157,15 @@
 
     var solidos = $('#form_ICOSUS :input').serializeArray();
     console.log(solidos);
-    
+
+    valida_icosus();
 
     $.ajax({
       type: "POST",
       url: "/icosus/",
       data: solidos, /*Aqui va la info que se le envia al servidor*/
       dataType: "json",
+
 
       success: function (response) {
         console.log(response)
@@ -175,8 +175,12 @@
         $(".contaminacion-grado-ICOSUS").html(clasi.clasificacion);
         $(".contaminacion-color-ICOSUS").html(clasi.color);
         $(".contaminacion-rango-ICOSUS").html(clasi.rango);
-        }
-      });
+      },
+
+      error: function () {
+        alert('HA OCURRIDO UN ERROR, INTENTALO DE NUEVO.');
+      }
     });
+  });
 
 </script>
