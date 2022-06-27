@@ -1,6 +1,4 @@
-from hashlib import new
 import math
-from pickletools import long1
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from calculaICA import models
@@ -19,19 +17,19 @@ def paginaContacto(request):
 
 def crearContacto(request):
 
-    correo = models.Contacto.objects.get(email = correoElectronico)
-    nombres = models.Contacto.objects.get(nombres = nombres)
-    apellidos = models.Contacto.objects.get(apellidos = apellidos)
-    tel = models.Contacto.objects.get(telefono = telefono)
-    comment = models.Contacto.objects.get(comentario = message)
+    # Se obtienen los datos desde el formulario
+    correo = request.POST['correoElectronico']
+    nombres = request.POST['nombres']
+    apellidos = request.POST['apellidos']
+    tel = request.POST['telefono']
+    comment = request.POST['message']
 
     if request.method == 'POST':
-        
-        newContacto = models.Contacto(correo, nombres, apellidos, tel, comment)
+        # Se crea el objeto y se guarda en la base de datos.
+        newContacto = models.Contacto.objects.create(email=correo, nombres = nombres, apellidos = apellidos, telefono = tel, comentario = comment)
         newContacto.save()
 
-
-    return HttpResponse('aaaa')
+    return JsonResponse({'email':correo, 'nombre':nombres, 'apellidos': apellidos, 'telefono': tel, 'comentario': comment})
 
 
 def calcularIcomi(request):

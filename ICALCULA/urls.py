@@ -19,11 +19,12 @@ from calculaICA.views import *
 
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
-    #path('suma/', sumar, name='suma'),
-    path('', paginaPrincipal, name='index'),
+    
+    path('admin/', admin.site.urls), # Url del sitio administrativo
+    path('', paginaPrincipal, name='index'), # Página principal
+    path('contacto/', paginaContacto, name='pageContacto'), # Página del formulario de contacto.
+
     path('icomi/', calcularIcomi, name='icomi' ),
     path('icosus/', calcularIcosus, name='icosus'),
-    path('contacto/', paginaContacto, name='pageContacto'),
     path('crearContacto/', crearContacto, name='crearContacto'),
 ]

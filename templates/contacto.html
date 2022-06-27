@@ -7,6 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--Estilos Css-->
   <link rel="stylesheet" type="text/css" href="/static/contacto.css">
+  <!--CDN JQuery-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <title>Document</title>
 </head>
 
@@ -14,78 +17,143 @@
 
   <div id="contact-form">
     <div>
-      <h1>¡Contactate con Nosotros!</h1>
-      <h4>Si necesitas informacion especifica de nuestros servicios, deja tus datos.</h4>
+      <h1>¡Contáctate con nosotros!</h1>
+      <br>
+      <h4>Si necesitas información específica de nuestros servicios, deja tus datos.</h4>
     </div>
-    <p id="failure">Oopsie...message not sent.</p>
-    <p id="success">Your message was sent successfully. Thank you!</p>
-
-    <form method="POST" action="" id="form_contact">
+    <form method="POST" id="form_contact">
       {% csrf_token %}
       <div>
         <label for="name">
-          <span class="required">Nombres: *</span>
-          <input type="text" id="name" name="nombres" value="" placeholder="Ingresa tu nombre" required="required"
-            tabindex="1" autofocus="autofocus" />
+          <span class="required">* Nombres</span>
+          <input type="text" name="nombres" value="" id="nombre" placeholder="Ingresa tu nombre" required="required"
+            tabindex="1" autofocus="autofocus" maxlength="25" />
         </label>
       </div>
       <div>
         <label for="name">
-          <span class="required">Apellidos: *</span>
-          <input type="text" id="name" name="apellidos" value="" placeholder="Ingresa tu apellido" required="required"
-            tabindex="1" autofocus="autofocus" />
+          <span class="required">* Apellidos </span>
+          <input type="text" name="apellidos" value="" id="apellido" placeholder="Ingresa tu apellido"
+            required="required" tabindex="1" autofocus="autofocus" maxlength="25" />
         </label>
       </div>
 
       <div>
         <label for="email">
-          <span class="required">Correo Electronico: *</span>
-          <input type="email" id="email" name="correoElectronico" value="" placeholder="correo@gmail.com" tabindex="2"
-            required="required" />
+          <span class="required">* Correo Electronico</span>
+          <input type="email" name="correoElectronico" id="correito" value="" placeholder="correo@gmail.com"
+            tabindex="2" required="required" />
         </label>
       </div>
       <div>
         <label for="tel">
-          <span class="required">Telefono: *</span>
-          <input type="" id="telefono" name="telefono" value="" placeholder="ej: 3216548899" tabindex="2"
-            required="required" />
+          <span class="required">* Telefono</span>
+          <input type="text" name="telefono" value="" id="cel" placeholder="ej: 3216548899" tabindex="2"
+            required="required" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/,'')" />
         </label>
       </div>
       <div>
         <label for="message">
-          <span class="required">Comentario: *</span>
-          <textarea id="message" name="message" placeholder="Por favor, escribe tus comentarios" tabindex="5"
+          <span class="required">* Comentario </span>
+          <textarea id="message" name="message" placeholder="Por favor, déjanos tu comentario." tabindex="5"
             required="required"></textarea>
         </label>
       </div>
       <div>
-        <button name="submit" type="submit" id="submit">ENVIAR</button>
+        <button type="submit" id="enviarForm">ENVIAR</button>
       </div>
     </form>
 
   </div>
-
-
 </body>
 
 </html>
 
+
 <script>
 
-  $.ajax({
-    url: '/crearContacto/',
-    method: 'POST',
-    data: {}, /*Aqui va la info que se le envia al servidor*/
-    dataType: 'json',
+  /*Validaciones*/
 
+  function validarFormulario() {
 
-    success: function (data_view) {
-      alert('AJAX call was successful!');
-      alert('Data from the server' + data_view);
-    },
-    error: function () {
-      alert('There was some error performing the AJAX call!');
+    var nombre = $("#nombre").val();
+    if (nombre.length == 0) {
+      alert('No has ingresado tu nombre');
+      $("#nombre").focus();
+      return false;
+    } else if (!/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+$/i.test(nombre)) {
+      alert("El campo solo permite ingresar letras, intentalo de nuevo.");
+      $("#nombre").focus();
+      return false;
     }
+
+    var apellido = $("#apellido").val();
+    if (apellido.length == 0) {
+      alert('No has ingresado tu apellido');
+      $("#apellido").focus();
+      return false;
+    } else if (!/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+$/i.test(apellido)) {
+      alert("El campo solo permite ingresar letras, intentalo de nuevo.");
+      $("#apellido").focus();
+      return false;
+    }
+
+    var correo = $("#correito").val();
+    if (correo.length == 0) {
+      alert('No has ingresado tu correo electrónico');
+      $("#correito").focus();
+      return false;
+    }
+
+    var tel = $("#cel").val();
+    if (tel.length == 0) {
+      alert('No has ingresado tu número de telefono');
+      $("#cel").focus();
+      return false;
+    }
+
+    var comentario = $("#message").val();
+    if (comentario.length == 0) {
+      alert('No has ingresado tu apellido');
+      $("#message").focus();
+      return false;
+    }
+
+    return true; // Retorne verdad, si todo esta bien.
+
   }
-  );
+
+  $('#enviarForm').click(function (e) {
+    e.preventDefault();
+
+    var info_contact = $('#form_contact :input').serializeArray();
+    console.log(info_contact);
+
+    validarFormulario();
+    if (!validarFormulario()) { // Si es falso, termine el proceso y no ejecuta el ajax.
+      return;
+    }
+
+
+    $.ajax({
+      url: '/crearContacto/',
+      method: 'POST',
+      data: info_contact, /*Aqui va la info que se le envia al servidor*/
+      dataType: 'json',
+
+
+      success: function (data_view) {
+        alert('¡TU INFORMACIÓN FUE REGISTRADA CON ÉXITO!');
+
+        /*Borrar todos los campos del fomulario luego de enviar el contacto*/
+        $('#form_contact :input').val("")
+
+      },
+
+      error: function () {
+        alert('HA OCURRIDO UN ERROR, INTENTALO DE NUEVO.');
+      }
+    });
+
+  });
 </script>
