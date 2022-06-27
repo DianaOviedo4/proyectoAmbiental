@@ -1,0 +1,133 @@
+<link rel="stylesheet" type="text/css" href="/static/section1.css">
+
+<div class="tabs">
+    <div class="tab1 active-tab" id="tab-ICOMI">ICOMI</div>
+    <div class="tab2" id="tab-ICOSUS">ICOSUS</div>
+</div>
+
+<div class="section1 row" id="ICOMI-tab">
+        <div class="col formulario1">
+            <div class="form1">
+                <form class="ui form" id="ICOMI_formulario" >
+                    {% csrf_token %}
+                    <div class="field">
+                      <label>Conductividad</label>
+                      <input type="text" id="conduct" name="conductividad" placeholder="150 gm" oninput="this.value = this.value.replace(/[^0-9]/,'')">
+                    </div>
+                    <div class="field">
+                      <label>Dureza</label>
+                      <input type="text" id="dureza" name="dureza" placeholder="20 ml" oninput="this.value = this.value.replace(/[^0-9]/,'')">
+                    </div>
+                    <div class="field">
+                        <label>Alcalinidad</label>
+                        <input type="text" id="alcalin" name="alcalinidad" placeholder="50 ml" oninput="this.value = this.value.replace(/[^0-9]/,'')">
+                      </div>
+                    <button class="ui button" id="enviar_form_ICOSUS" type="submit">Calcular</button>
+                  </form>
+            </div>
+        </div>
+        <div class="col resultado1">
+              <div class="mallita">
+                <div class="hijo">
+                    <div class="contenidito">
+                        <h2>Número de parámetros</h2>
+                        <h1>3</h1>
+                    </div>
+                </div>
+                <div class="hijo">
+                    <div class="contenidito">
+                        <h2>Valor del índice</h2>
+                        <h1 id="valor-indice-ICOMI">-</h1>
+                    </div>
+                </div>
+                <div class="hijo">
+                    <div class="contenidito">
+                        <h2>Grado de contaminación</h2>
+                        <h1 class="contaminacion-grado-ICOMI">-</h1>
+                    </div>
+                </div>
+                <div class="hijo">
+                    <div class="contenidito">
+                        <h2>Rango</h2>
+                        <h1 class="contaminacion-rango-ICOMI">-</h1>
+                    </div>
+                </div>
+                <div class="hijo">
+                    <div class="contenidito">
+                        <h2>Escala de color</h2>
+                        <h1 class="contaminacion-color-ICOMI" >-</h1>
+                    </div>
+                </div>
+              </div>
+        </div>
+</div>
+
+<div class="section1 row" id="ICOSUS-tab" style="display:none;">
+    <div class="col formulario1">
+        <div class="form1">
+            <form class="ui form" id="form_ICOSUS" >
+                {% csrf_token %}
+                <div class="field">
+                  <label>Sólidos totales</label>
+                  <input type="text" id="solid_total" name="solidos_totales" placeholder="15" oninput="this.value = this.value.replace(/[^0-9]/,'')">
+                </div>
+                <button class="ui button" id="enviar_form_ICOSUS" type="submit">Calcular</button>
+              </form>
+        </div>
+    </div>
+    <div class="col resultado1">
+          <div class="mallita">
+            <div class="hijo">
+                <div class="contenidito">
+                    <h2>Número de parámetros</h2>
+                    <h1>1</h1>
+                </div>
+            </div>
+            <div class="hijo">
+                <div class="contenidito">
+                    <h2>Valor del índice</h2>
+                    <h1 class="indice-ICOSUS">0</h1>
+                </div>
+            </div>
+            <div class="hijo">
+                <div class="contenidito">
+                    <h2>Grado de contaminación</h2>
+                    <h1 class="contaminacion-grado-ICOSUS">0</h1>
+                </div>
+            </div>
+            <div class="hijo">
+                <div class="contenidito">
+                    <h2>Rango</h2>
+                    <h1 class="contaminacion-rango-ICOSUS">0</h1>
+                </div>
+            </div>
+            <div class="hijo">
+                <div class="contenidito">
+                    <h2>Escala de color</h2>
+                    <h1 class="contaminacion-color-ICOSUS">0</h1>
+                </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(".tab2").click(function(){
+        $("#ICOMI-tab").hide("slow");
+        $("#ICOSUS-tab").show("slow");
+
+        $(".active-tab").removeClass("active-tab");
+        $("#tab-ICOSUS").addClass("active-tab");
+    })
+
+    $(".tab1").click(function(){
+        $("#ICOSUS-tab").hide("slow");
+        $("#ICOMI-tab").show("slow");
+
+        $(".active-tab").removeClass("active-tab");
+        $("#tab-ICOMI").addClass("active-tab");
+    })
+
+</script>
