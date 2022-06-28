@@ -5,7 +5,6 @@ from django.db import models
 
 class Contacto(models.Model):
     email = models.EmailField(primary_key = True, blank = False) # Llave primaria -> sera nuestro identificador en la base de datos.
-
     nombres = models.CharField(max_length = 30)
     apellidos = models.CharField(max_length = 30)
     telefono = models.CharField(max_length = 10)

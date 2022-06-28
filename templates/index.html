@@ -73,7 +73,7 @@
     // Campos de texto Icomi
     if ($("#conduct").val() == "") {
       alert("El campo conductividad no puede estar vacío.");
-      $("#conduct").focus();       // Esta función coloca el foco de escritura del usuario en el campo Nombre directamente.
+      $("#conduct").focus();   // Esta función coloca el foco de escritura del usuario en el campo Nombre directamente.
       return false;
     }
     if ($("#dureza").val() == "") {
@@ -117,7 +117,7 @@
     }
   }
 
-  $('#enviar_form_ICOSUS').click(function (e) {
+  $('#enviar_form_ICOMI').click(function (e) {
     e.preventDefault();
     var info_icomi = $('#ICOMI_formulario :input').serializeArray();
     console.log(info_icomi);
@@ -152,7 +152,7 @@
 
 
 
-  $('#form_ICOSUS').click(function (e) {
+  $('#enviar_form_ICOSUS').click(function (e) {
     e.preventDefault();
 
     var solidos = $('#form_ICOSUS :input').serializeArray();
